@@ -1,0 +1,31 @@
+# Render.com Deployment Configuration
+# https://render.com
+
+services:
+  - type: web
+    name: competitor-ad-analyzer
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: API_SECRET_KEY
+        generateValue: true
+      - key: PORT
+        value: 8000
+    healthCheckPath: /health
+    autoDeploy: true
+    plan: starter  # Free tier
+
+    # Persistent disk for database
+    disk:
+      name: ad-analyzer-data
+      mountPath: /app/data
+      sizeGB: 1
+
+  # Optional: PostgreSQL database
+  # - type: pserv
+  #   name: competitor-ad-db
+  #   runtime: postgresql
+  #   plan: starter
+  #   ipAllowList: []

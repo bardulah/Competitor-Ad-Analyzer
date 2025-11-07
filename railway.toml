@@ -1,0 +1,18 @@
+# Railway.app Deployment Configuration
+# https://railway.app
+
+# This file tells Railway how to build and run your app
+# Auto-deploys from GitHub on every push
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "sh -c 'alembic upgrade head && uvicorn api.server:app --host 0.0.0.0 --port $PORT'"
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 10
+
+[health]
+path = "/health"
+port = 8000

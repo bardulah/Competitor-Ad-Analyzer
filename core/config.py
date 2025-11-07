@@ -58,6 +58,10 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", description="Logging level")
     log_file: Optional[Path] = Field(default=None, description="Log file path")
 
+    # Error Tracking
+    sentry_dsn: Optional[str] = Field(default=None, description="Sentry DSN for error tracking")
+    environment: str = Field(default="production", description="Environment name")
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Create directories
